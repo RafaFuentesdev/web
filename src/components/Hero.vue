@@ -5,7 +5,7 @@
                 <div class="flex lg:flex-1">
                     <a href="#" class="-m-1.5 p-1.5">
                         <span class="sr-only">Blueberry</span>
-                        <img class="h-12 w-auto" src="src/assets/logo.svg"
+                        <img class="h-12 w-auto" src="/logo.svg"
                             alt="" />
                     </a>
                 </div>
