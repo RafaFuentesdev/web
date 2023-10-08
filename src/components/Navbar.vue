@@ -5,7 +5,7 @@
                 <div class="flex lg:flex-1">
                 <router-link to="/" class="-m-1.5 p-1.5">
                     <span class="sr-only">FuegoMalaga</span>
-                    <img class="h-12 w-auto" src="" alt="" />
+                    <img class="h-12 w-auto" src="/logo.svg" alt="" />
                 </router-link>
                 </div>
                 <div class="flex lg:hidden">
@@ -31,7 +31,7 @@
                     <div class="flex items-center justify-between">
                     <router-link to="/" class="-m-1.5 p-1.5">
                         <span class="sr-only">FuegoMalaga</span>
-                        <img class="h-8 w-auto" src="" alt="" />
+                        <img class="h-8 w-auto" src="/logo.svg" alt="" />
                     </router-link>
 
                         <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = false">
