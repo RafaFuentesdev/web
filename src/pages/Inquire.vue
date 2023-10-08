@@ -5,8 +5,4 @@ import Map from '../components/Map.vue'
 
 <template>
     <Hero />
-    <Map />
-    <h1>
-        Inquire
-    </h1>
 </template>

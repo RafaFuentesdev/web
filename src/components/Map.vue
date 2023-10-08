@@ -1,12 +1,14 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import L from "leaflet";
+import { RouterLink } from "vue-router";
 
 const lat = ref(0);
 const long = ref(0);
 const map = ref();
 const mapContainer = ref();
 const loading = ref(true); // to determine if the location is being loaded
+const showDialog = ref(false);
 
 onMounted(() => {
     map.value = L.map(mapContainer.value).setView([36.717425675624035, -4.411479662934813], 15);
@@ -57,19 +59,31 @@ function onMapClick(e) {
 
 function reportFire() {
     if (currentMarker.value) {
-        const { lat, lng } = currentMarker.value.getLatLng();
-        // Store the reported fire in localStorage
-        const userFires = JSON.parse(localStorage.getItem("userReportedFires") || "[]");
-        userFires.push({ lat, lng });
-        localStorage.setItem("userReportedFires", JSON.stringify(userFires));
+        showDialog.value = true;
     }
 }
+
+function confirmReport() {
+    const { lat, lng } = currentMarker.value.getLatLng();
+    const userFires = JSON.parse(localStorage.getItem("userReportedFires") || "[]");
+    userFires.push({ lat, lng });
+    localStorage.setItem("userReportedFires", JSON.stringify(userFires));
+    showDialog.value = false;
+    message.value = "Fire location successfully reported!";
+    showMessage.value = true;
+
+    setTimeout(() => {
+        showMessage.value = false;
+        router.push('/success');  // Redirect to /success page
+    }, 3000);
+}
+
 
 </script>
 
 <template>
     <div class="flex flex-col items-center justify-center my-8 sm:w-auto">
-        <div ref="mapContainer" class="w-full h-96 sm:w-[40vw] sm:h-[40vh]"></div>
+        <div v-if="!showDialog" ref="mapContainer" class="w-full h-96 sm:w-[40vw] sm:h-[40vh]"></div>
         <div v-if="loading" class="mt-4 flex items-center space-x-2">
             <span class="loader"></span> <!-- Loading spinner -->
             <span class="text-black">Obtaining your location...</span>
@@ -80,6 +94,17 @@ function reportFire() {
                 Submit Fire Location
             </button>
         </transition>
+        <div v-if="showDialog" class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-2/3 text-black">
+            <h2 class="text-xl font-bold mb-4">Confirm Fire Report</h2>
+            <p>Do you want to report a fire at the coordinates:</p>
+            <p class="my-2 font-semibold">{{ lat }}, {{ long }}</p>
+            <div class="mt-4 flex justify-end">
+                <button @click="showDialog = false" class="mr-4 px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg">Cancel</button>
+                <RouterLink to="/success" @click="confirmReport" class="px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded-lg">Confirm</RouterLink>
+            </div>
+        </div>
+    </div>
     </div>
 </template>
 
@@ -93,6 +118,10 @@ function reportFire() {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.fixed {
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 @keyframes bounce {
