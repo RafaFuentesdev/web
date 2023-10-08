@@ -5,7 +5,7 @@
                 <div class="flex lg:flex-1">
                 <router-link to="/" class="-m-1.5 p-1.5">
                     <span class="sr-only">FuegoMalaga</span>
-                    <img class="h-12 w-auto" src="/logo.svg" alt="" />
+                    <img class="h-12 w-auto" src="logo.svg" alt="" />
                 </router-link>
                 </div>
                 <div class="flex lg:hidden">
