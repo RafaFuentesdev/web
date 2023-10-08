@@ -5,6 +5,7 @@ import Home from './pages/Home.vue'
 import Verify from './pages/Verify.vue'
 import Prevention from './pages/Prevention.vue'
 import Inquire from './pages/Inquire.vue'
+import AboutUs from './pages/AboutUs.vue'
 
 
 import './style.css'
@@ -16,7 +17,8 @@ const router = createRouter({
         { path: '/', component: Home },
         { path: '/verify', component: Verify},
         { path: '/prevention', component: Prevention},
-        { path: '/inquire', component: Inquire}
+        { path: '/inquire', component: Inquire},
+        { path: '/about-us', component:AboutUs}
     ]
 });
 

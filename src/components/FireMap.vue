@@ -4,7 +4,6 @@
     </div>
 </template>
 
-
 <script>
 import axios from "axios";
 import L from "leaflet";
@@ -12,32 +11,52 @@ import L from "leaflet";
 export default {
     data() {
         return {
-            MAP_KEY: "1c2b5af3e9e24b0e7349fe33ad064069",
+            MAP_KEY: "5ab721f33f0c2ceee7847bd21a7baeda",
             map: null,
             markers: [],
         };
     },
     async mounted() {
-        const esp_url = `https://firms.modaps.eosdis.nasa.gov/api/country/csv/${this.MAP_KEY}/MODIS_NRT/ESP/10`;
-        try {
-            const response = await axios.get(esp_url);
-            const data = response.data.split("\n").slice(1); // Exclude header
-            const pointsData = data.map(line => {
-                const items = line.split(",");
-                return {
-                    lat: parseFloat(items[1]),
-                    lon: parseFloat(items[2]),
-                    brightness: parseFloat(items[3]),
-                    confidence: parseInt(items[10], 10),
-                };
-            });
+        let pointsData = this.getStoredData();
 
-            this.initializeMap(pointsData);
-        } catch (error) {
-            console.error("Error fetching data:", error);
+        if (!pointsData) {
+            const esp_url = `https://firms.modaps.eosdis.nasa.gov/api/country/csv/${this.MAP_KEY}/MODIS_NRT/ESP/10`;
+            try {
+                const response = await axios.get(esp_url);
+                const data = response.data.split("\n").slice(1); // Exclude header
+                pointsData = data.map(line => {
+                    const items = line.split(",");
+                    return {
+                        lat: parseFloat(items[1]),
+                        lon: parseFloat(items[2]),
+                        brightness: parseFloat(items[3]),
+                        confidence: parseInt(items[10], 10),
+                    };
+                });
+
+                // Save the data and timestamp to LocalStorage
+                localStorage.setItem("mapData", JSON.stringify(pointsData));
+                localStorage.setItem("dataTimestamp", Date.now());
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                return;
+            }
         }
+
+        this.initializeMap(pointsData);
     },
     methods: {
+        getStoredData() {
+            const storedData = localStorage.getItem("mapData");
+            const storedTimestamp = localStorage.getItem("dataTimestamp");
+
+            const tenMinutes = 10 * 60 * 1000; // in milliseconds
+            if (storedData && storedTimestamp && (Date.now() - storedTimestamp) < tenMinutes) {
+                return JSON.parse(storedData);
+            }
+            return null;
+        },
         initializeMap(pointsData) {
             this.map = L.map("map").setView([40.4637, -3.7492], 6);
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -65,12 +84,11 @@ export default {
         }
     }
 };
-
 </script>
 
 <style scoped>
 #map {
-  width: 100%;
-  height: 100vh;
+    width: 100%;
+    height: 100vh;
 }
 </style>
