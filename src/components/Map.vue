@@ -68,8 +68,8 @@ function reportFire() {
 </script>
 
 <template>
-    <div class="flex flex-col items-center justify-center my-8 w-full sm:w-auto lg:w-3/4 xl:w-2/3">
-        <div ref="mapContainer" class="w-full sm:w-96 lg:w-full h-96 lg:h-[50vh]"></div>
+    <div class="flex flex-col items-center justify-center my-8 sm:w-auto">
+        <div ref="mapContainer" class="w-full h-96 sm:w-[40vw] sm:h-[40vh]"></div>
         <div v-if="loading" class="mt-4 flex items-center space-x-2">
             <span class="loader"></span> <!-- Loading spinner -->
             <span class="text-black">Obtaining your location...</span>
@@ -82,7 +82,6 @@ function reportFire() {
         </transition>
     </div>
 </template>
-
 
 
 <style scoped>
@@ -161,5 +160,6 @@ function reportFire() {
     transform: scale(0.7);
     /* Start at 70% of the original size */
 }
+
 </style>
 
