@@ -5,5 +5,4 @@ import Map from '../components/Map.vue'
 
 <template>
     <Hero />
-    <Map />
 </template>
