@@ -68,8 +68,8 @@ function reportFire() {
 </script>
 
 <template>
-    <div class="flex flex-col items-center justify-center my-8">
-        <div ref="mapContainer" style="width: 40vw; height: 40vh"></div>
+    <div class="flex flex-col items-center justify-center my-8 w-full sm:w-auto">
+        <div ref="mapContainer" class="w-full sm:w-96 h-96"></div>
         <div v-if="loading" class="mt-4 flex items-center space-x-2">
             <span class="loader"></span> <!-- Loading spinner -->
             <span class="text-black">Obtaining your location...</span>
@@ -82,6 +82,7 @@ function reportFire() {
         </transition>
     </div>
 </template>
+
 
 <style scoped>
 @keyframes spin {
@@ -159,23 +160,5 @@ function reportFire() {
     transform: scale(0.7);
     /* Start at 70% of the original size */
 }
-
-/* Default styles for desktop */
-div[ref="mapContainer"] {
-    width: 40vw;
-    height: 40vh;
-    max-width: 600px; /* optional: to prevent it from getting too large on wide screens */
-}
-
-/* Mobile styles */
-@media (max-width: 768px) {  /* typical breakpoint for tablets and below */
-    div[ref="mapContainer"] {
-        width: 100%;  /* Make map take full width of its container on mobile */
-        height: 40vh;
-    }
-}
-
-
-
 </style>
 
