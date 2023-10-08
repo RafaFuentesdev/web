@@ -3,12 +3,12 @@ import { onMounted, ref } from "vue";
 import L from "leaflet";
 
 const lat = ref(0);
-const lng = ref(0);
+const long = ref(0);
 const map = ref();
 const mapContainer = ref();
 
 onMounted(() => {
-    map.value = L.map(mapContainer.value).setView([51.505, -0.09], 13);
+    map.value = L.map(mapContainer.value).setView([36.6987387, -4.4390678], 15);
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution:
@@ -22,8 +22,8 @@ function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition((position) => {
             lat.value = position.coords.latitude;
-            lng.value = position.coords.longitude;
-            map.value.setView([lat.value, lng.value], 15);
+            long.value = position.coords.longitude;
+            map.value.setView([lat.value, long.value], 15);
 
             // If a marker already exists, remove it
             if (currentMarker.value) {
@@ -31,7 +31,7 @@ function getLocation() {
             }
 
             // Now add the new marker and store it in the reference
-            currentMarker.value = L.marker([lat.value, lng.value], { draggable: true })
+            currentMarker.value = L.marker([lat.value, long.value], { draggable: true })
                 .addTo(map.value)
                 .on("dragend", (event) => {
                     console.log(event);

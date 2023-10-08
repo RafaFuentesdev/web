@@ -1,12 +1,10 @@
 <script setup>
 import Hero from '../components/Hero.vue'
-import Map from '../components/Map.vue'
+import FireMap from '../components/FireMap.vue'
+
 </script>
 
 <template>
     <Hero />
-    <Map />
-    <h1>
-        Verify
-    </h1>
+    <FireMap/>
 </template>
