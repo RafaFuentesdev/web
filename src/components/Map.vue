@@ -158,5 +158,22 @@ function reportFire() {
     opacity: 0;
     transform: scale(0.7);
     /* Start at 70% of the original size */
-}</style>
+}
+
+div[ref="mapContainer"] {
+    width: 40vw;
+    height: 40vh;
+    max-width: 600px;  /* optional: to prevent it from getting too large on wide screens */
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {  /* typical breakpoint for tablets and below */
+    div[ref="mapContainer"] {
+        width: 80vw;  /* Cover 80% of the viewport width */
+        height: 40vh;
+    }
+}
+
+
+</style>
 
